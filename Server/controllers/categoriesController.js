@@ -1,6 +1,6 @@
 const db = require('../db');
 
-// GET all categories
+// ✅ GET all categories
 exports.getAllCategories = (req, res) => {
   db.query('SELECT * FROM categories', (err, results) => {
     if (err) return res.status(500).json({ error: err.message });
@@ -8,7 +8,7 @@ exports.getAllCategories = (req, res) => {
   });
 };
 
-// GET category by ID
+// ✅ GET category by ID
 exports.getCategoryById = (req, res) => {
   db.query('SELECT * FROM categories WHERE id = ?', [req.params.id], (err, results) => {
     if (err) return res.status(500).json({ error: err.message });
@@ -17,7 +17,15 @@ exports.getCategoryById = (req, res) => {
   });
 };
 
-// CREATE category
+// ✅ GET total categories count
+exports.getCategoryCount = (req, res) => {
+  db.query('SELECT COUNT(*) AS total FROM categories', (err, results) => {
+    if (err) return res.status(500).json({ error: err.message });
+    res.json({ total: results[0].total });
+  });
+};
+
+// ✅ CREATE category
 exports.createCategory = (req, res) => {
   const {
     name, slug, icon, title, short_description, heading, long_description,
@@ -56,7 +64,7 @@ exports.createCategory = (req, res) => {
   });
 };
 
-// UPDATE category
+// ✅ UPDATE category
 exports.updateCategory = (req, res) => {
   const {
     name, slug, icon, title, short_description, heading, long_description,
@@ -94,7 +102,7 @@ exports.updateCategory = (req, res) => {
   });
 };
 
-// DELETE category
+// ✅ DELETE category
 exports.deleteCategory = (req, res) => {
   db.query('DELETE FROM categories WHERE id = ?', [req.params.id], (err, result) => {
     if (err) return res.status(500).json({ error: err.message });

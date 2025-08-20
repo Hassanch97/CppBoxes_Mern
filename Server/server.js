@@ -46,6 +46,7 @@ app.use('/redirections', redirectionRoutes);
 app.use('/services', servicesRoutes);
 app.use('/slider', sliderRoutes);
 app.use('/users', usersRoutes);
+app.use('/stats', require('./routes/stats'));
 
 app.listen(PORT, () => {
   console.log(`Server running at http://localhost:${PORT}`);

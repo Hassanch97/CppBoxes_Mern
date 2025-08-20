@@ -1,0 +1,5 @@
+.active_count {}
+.active_count ul {list-style: none;background-color: #ed920f;display: flex;align-items: center;justify-content: space-between;padding: 15px;}
+.active_count ul li label {font-weight: 600;font-size: 16px;color: #fff;}
+.active_count ul li p {margin-block: 0;font-weight: 600;}
+.active_count ul li:nth-child(2) > *{color: #fff;}
