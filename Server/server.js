@@ -47,7 +47,6 @@ app.use('/services', servicesRoutes);
 app.use('/slider', sliderRoutes);
 app.use('/users', usersRoutes);
 
-
 app.listen(PORT, () => {
   console.log(`Server running at http://localhost:${PORT}`);
 });
