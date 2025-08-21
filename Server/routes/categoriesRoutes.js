@@ -9,7 +9,4 @@ router.post("/", categoriesController.createCategory);
 router.put("/:id", categoriesController.updateCategory);
 router.delete("/:id", categoriesController.deleteCategory);
 
-// ✅ New count route
-router.get("/count/total", categoriesController.getCategoryCount);
-
 module.exports = router;

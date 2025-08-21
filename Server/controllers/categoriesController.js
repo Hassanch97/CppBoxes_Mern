@@ -1,11 +1,25 @@
 const db = require('../db');
+const Category = require("../model/CategoriesModel");
+const User = require("../model/usersModel");
 
 // ✅ GET all categories
-exports.getAllCategories = (req, res) => {
-  db.query('SELECT * FROM categories', (err, results) => {
-    if (err) return res.status(500).json({ error: err.message });
-    res.json(results);
-  });
+exports.getAllCategories = async (req, res) => {
+  // db.query('SELECT * FROM categories', (err, results) => {
+  //   if (err) return res.status(500).json({ error: err.message });
+  //   res.json(results);
+  // });
+  try {
+    const categories = await Category.findAll({
+      include: [
+        { model: User, as: 'createdUser', attributes: ['id', 'full_name', 'email'] },
+        { model: User, as: 'updatedUser', attributes: ['id', 'full_name', 'email'] }
+      ]
+    });
+    res.json(categories);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Error fetching categories' });
+  }
 };
 
 // ✅ GET category by ID
@@ -14,14 +28,6 @@ exports.getCategoryById = (req, res) => {
     if (err) return res.status(500).json({ error: err.message });
     if (results.length === 0) return res.status(404).json({ message: 'Category not found' });
     res.json(results[0]);
-  });
-};
-
-// ✅ GET total categories count
-exports.getCategoryCount = (req, res) => {
-  db.query('SELECT COUNT(*) AS total FROM categories', (err, results) => {
-    if (err) return res.status(500).json({ error: err.message });
-    res.json({ total: results[0].total });
   });
 };
 
