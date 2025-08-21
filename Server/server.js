@@ -29,12 +29,12 @@ const sliderRoutes = require('./routes/sliderRoutes');
 const usersRoutes = require('./routes/usersRoutes');
 
 // Use routes
+app.use('/categories', categoriesRoutes);
 app.use('/products', productsRoutes);
 app.use('/blog_categories', blogCategoriesRoutes);
 app.use('/blogs', blogsRoutes);
 app.use('/blog_comments', blogCommentsRoutes);
 app.use('/authors', authorsRoutes);
-app.use('/categories', categoriesRoutes);
 app.use('/faqs', faqsRoutes);
 app.use('/galleries', galleriesRoutes);
 app.use('/product_images', productImagesRoutes);

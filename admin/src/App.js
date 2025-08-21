@@ -3,8 +3,8 @@ import './App.css';
 import Header from './HOC/Header';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Home from './Components/Home';
-import Products from './Components/Products';
-import Category from './Components/Category';
+import Products from './Pages/Products';
+import Category from './Pages/Category';
 
 function App() {
   return (

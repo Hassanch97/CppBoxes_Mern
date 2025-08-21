@@ -1,27 +1,41 @@
 const db = require('../db');
+const Product = require("../model/ProductsModel");
+const User = require("../model/usersModel");
 
 // GET all products with category info
-exports.getAllProducts = (req, res) => {
-  const query = `
-    SELECT 
-      p.id, p.name, p.breadcrumb_title, p.add_schema, p.slug, 
-      p.feature_image, p.alt, p.category, p.short_description, 
-      p.long_description, p.key_features, p.specifications, 
-      p.paper_stock, p.printing_methods, p.inks_variations, 
-      p.add_ons, p.coatings, p.stock_gallery, p.printing_gallery, 
-      p.inks_gallery, p.add_ons_gallery, p.coatings_gallery, 
-      p.faqs, p.status, p.meta_title, p.meta_description, 
-      p.meta_keywords, p.created_at, p.created_by, 
-      p.updated_at, p.updated_by,
-      c.name AS category_name, c.slug AS category_slug, c.icon AS category_icon
-    FROM products p
-    LEFT JOIN categories c ON p.category = c.id
-  `;
+exports.getAllProducts = async (req, res) => {
+  // const query = `
+  //   SELECT 
+  //     p.id, p.name, p.breadcrumb_title, p.add_schema, p.slug, 
+  //     p.feature_image, p.alt, p.category, p.short_description, 
+  //     p.long_description, p.key_features, p.specifications, 
+  //     p.paper_stock, p.printing_methods, p.inks_variations, 
+  //     p.add_ons, p.coatings, p.stock_gallery, p.printing_gallery, 
+  //     p.inks_gallery, p.add_ons_gallery, p.coatings_gallery, 
+  //     p.faqs, p.status, p.meta_title, p.meta_description, 
+  //     p.meta_keywords, p.created_at, p.created_by, 
+  //     p.updated_at, p.updated_by,
+  //     c.name AS category_name, c.slug AS category_slug, c.icon AS category_icon
+  //   FROM products p
+  //   LEFT JOIN categories c ON p.category = c.id
+  // `;
   
-  db.query(query, (err, results) => {
-    if (err) return res.status(500).json({ error: err.message });
-    res.json(results);
-  });
+  // db.query(query, (err, results) => {
+  //   if (err) return res.status(500).json({ error: err.message });
+  //   res.json(results);
+  // });
+    try {
+    const products = await Product.findAll({
+      include: [
+        { model: User, as: 'createdUser', attributes: ['id', 'full_name', 'email'] },
+        { model: User, as: 'updatedUser', attributes: ['id', 'full_name', 'email'] }
+      ]
+    });
+    res.json(products);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Error fetching products' });
+  }
 };
 
 // GET product by ID with category info

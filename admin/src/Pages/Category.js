@@ -22,6 +22,7 @@ import Switch from '@mui/material/Switch';
 import DeleteIcon from '@mui/icons-material/Delete';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import { visuallyHidden } from '@mui/utils';
+import TextField from '@mui/material/TextField';
 
 // ---- Columns (unchanged, as you wanted) ----
 const headCells = [
@@ -34,7 +35,6 @@ const headCells = [
   { id: 'status', label: 'Status' },
   { id: 'action', label: 'Action' },
 ];
-
 // ---- Helpers for sorting ----
 function getSortValue(row, key) {
   switch (key) {
@@ -43,7 +43,6 @@ function getSortValue(row, key) {
     default: return row[key] ?? '';
   }
 }
-
 function descendingComparator(a, b, orderBy) {
   const A = getSortValue(a, orderBy);
   const B = getSortValue(b, orderBy);
@@ -56,19 +55,16 @@ function descendingComparator(a, b, orderBy) {
     if (bTime > aTime) return 1;
     return 0;
   }
-
   // Fallback string/number compare
   if (B < A) return -1;
   if (B > A) return 1;
   return 0;
 }
-
 function getComparator(order, orderBy) {
   return order === 'desc'
-    ? (a, b) => descendingComparator(a, b, orderBy)
-    : (a, b) => -descendingComparator(a, b, orderBy);
+  ? (a, b) => descendingComparator(a, b, orderBy)
+  : (a, b) => -descendingComparator(a, b, orderBy);
 }
-
 // ---- Table Head (kept with sorting + select all) ----
 function EnhancedTableHead({ onSelectAllClick, order, orderBy, numSelected, rowCount, onRequestSort }) {
   const createSortHandler = (property) => (event) => {
@@ -92,9 +88,9 @@ function EnhancedTableHead({ onSelectAllClick, order, orderBy, numSelected, rowC
           <TableCell key={headCell.id} sortDirection={orderBy === headCell.id ? order : false}>
             {headCell.id !== 'action' ? (
               <TableSortLabel
-                active={orderBy === headCell.id}
-                direction={orderBy === headCell.id ? order : 'asc'}
-                onClick={createSortHandler(headCell.id)}
+              active={orderBy === headCell.id}
+              direction={orderBy === headCell.id ? order : 'asc'}
+              onClick={createSortHandler(headCell.id)}
               >
                 {headCell.label}
                 {orderBy === headCell.id ? (
@@ -104,7 +100,7 @@ function EnhancedTableHead({ onSelectAllClick, order, orderBy, numSelected, rowC
                 ) : null}
               </TableSortLabel>
             ) : (
-              headCell.label
+            headCell.label
             )}
           </TableCell>
         ))}
@@ -112,7 +108,6 @@ function EnhancedTableHead({ onSelectAllClick, order, orderBy, numSelected, rowC
     </TableHead>
   );
 }
-
 // ---- Toolbar (kept) ----
 function EnhancedTableToolbar({ numSelected }) {
   return (
@@ -120,7 +115,7 @@ function EnhancedTableToolbar({ numSelected }) {
       sx={[
         { pl: { sm: 2 }, pr: { xs: 1, sm: 1 } },
         numSelected > 0 && {
-          bgcolor: (theme) => alpha(theme.palette.primary.main, theme.palette.action.activatedOpacity),
+        bgcolor: (theme) => alpha(theme.palette.primary.main, theme.palette.action.activatedOpacity),
         },
       ]}
     >
@@ -133,7 +128,6 @@ function EnhancedTableToolbar({ numSelected }) {
           Categories
         </Typography>
       )}
-
       {numSelected > 0 ? (
         <Tooltip title="Delete">
           <IconButton>
@@ -150,9 +144,9 @@ function EnhancedTableToolbar({ numSelected }) {
     </Toolbar>
   );
 }
-
 // ---- Main component ----
 const Category = () => {
+  const [searchQuery, setSearchQuery] = React.useState('');
   const [rows, setRows] = React.useState([]);   // holds data from API
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState('id');
@@ -164,18 +158,27 @@ const Category = () => {
   // Fetch from your API and keep your heading intact
   React.useEffect(() => {
     fetch('http://localhost:3000/categories/')
-      .then((res) => res.json())
-      .then((data) => {
-        // data expected to be array of categories
-        setRows(Array.isArray(data) ? data : []);
-        
-      })
-      .catch((err) => {
-        console.error('Error fetching categories:', err);
-        setRows([]);
-      });
+    .then((res) => res.json())
+    .then((data) => {
+      // data expected to be array of categories
+      setRows(Array.isArray(data) ? data : []);
+
+    })
+    .catch((err) => {
+      console.error('Error fetching categories:', err);
+      setRows([]);
+    });
   }, []);
 
+  const filteredRows = React.useMemo(() => {
+    if (!searchQuery) return rows;
+    const lowerQuery = searchQuery.toLowerCase();
+    return rows.filter(
+      (row) =>
+      (row.name && row.name.toLowerCase().includes(lowerQuery)) ||
+      (row.slug && row.slug.toLowerCase().includes(lowerQuery))
+    );
+  }, [rows, searchQuery]);
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';
     setOrder(isAsc ? 'desc' : 'asc');
@@ -215,8 +218,8 @@ const Category = () => {
 
   // Sorted + paginated rows
   const sortedRows = React.useMemo(
-    () => [...rows].sort(getComparator(order, orderBy)),
-    [rows, order, orderBy]
+    () => [...filteredRows].sort(getComparator(order, orderBy)),
+    [filteredRows, order, orderBy]
   );
 
   const paginatedRows = React.useMemo(
@@ -225,13 +228,23 @@ const Category = () => {
   );
 
   const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
+
   return (
     <div>
       {/* ✅ Your original heading preserved */}
       <h2>ALL CATEGORIES</h2>
 
       <div className="catergories_main">
-        <div></div>
+        <div>
+          <TextField
+            id="outlined-search-input"
+            label="Search"
+            type="text"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            autoComplete="off"
+          />
+        </div>
         <Button variant="contained">Add Category</Button>
       </div>
 
@@ -282,13 +295,12 @@ const Category = () => {
                         {row.feature_image ? (
                           <img
                             // src={row.feature_image}
-
-src="https://www.cppboxes.com/media/products/Custom_Anklet_Boxes_0000_51.jpg"
+                            src="https://www.cppboxes.com/media/products/Custom_Anklet_Boxes_0000_51.jpg"
                             alt={row.alt || row.name || 'banner'}
                             style={{ width: 50, height: 50, objectFit: 'cover', borderRadius: 4 }}
                           />
                         ) : (
-                          'N/A'
+                        'N/A'
                         )}
                       </TableCell>
                       <TableCell>{row.updated_at || '—'}</TableCell>
@@ -328,5 +340,4 @@ src="https://www.cppboxes.com/media/products/Custom_Anklet_Boxes_0000_51.jpg"
     </div>
   );
 };
-
 export default Category;

@@ -1,6 +1,4 @@
-const { Sequelize } = require('sequelize');
-
-const { DataTypes } = require('sequelize');
+const { Sequelize , DataTypes } = require('sequelize');
 const {sequelize} = require('../config');
 const User = require('./usersModel');
 
@@ -51,7 +49,7 @@ const Category = sequelize.define('Category', {
 Category.belongsTo(User, { foreignKey: 'created_by', as: 'createdUser' });
 Category.belongsTo(User, { foreignKey: 'updated_by', as: 'updatedUser' });
 
-User.hasMany(Category, { foreignKey: 'created_by', as: 'createdCategories' });
-User.hasMany(Category, { foreignKey: 'updated_by', as: 'updatedCategories' });
+// User.hasMany(Category, { foreignKey: 'created_by', as: 'createdCategories' });
+// User.hasMany(Category, { foreignKey: 'updated_by', as: 'updatedCategories' });
 
 module.exports = Category;
