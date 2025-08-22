@@ -9,6 +9,8 @@ import BlogCategory from './Pages/BlogCategory';
 import NewsLetter from './Pages/NewsLetter';
 import Pages from './Pages/Pages';
 import Portfolio from './Pages/Portfolio';
+import Reviews from './Pages/Reviews';
+import FAQS from './Pages/FAQS';
 
 function App() {
   return (
@@ -26,6 +28,8 @@ function App() {
            <Route path="newsletter" element={<NewsLetter />} />
            <Route path="pages" element={<Pages />} />
            <Route path="portfolio" element={<Portfolio />} />
+           <Route path="reviews" element={<Reviews />} />
+           <Route path="faqs" element={<FAQS />} />
 
 
         </Route>

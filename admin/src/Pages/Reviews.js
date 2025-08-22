@@ -26,9 +26,10 @@ import TextField from '@mui/material/TextField';
 
 const headCells = [
     { id: 'id', label: 'ID' },
-    { id: 'name', label: 'Name' },
+    { id: 'title', label: 'Title' },
+    { id: 'rating', label: 'Rating' },
     { id: 'image', label: 'Image' },
-    { id: 'productId', label: 'Product ID' },
+    { id: 'status', label: 'Status' },
     { id: 'action', label: 'Action' },
 ];
 function getSortValue(row, key) {
@@ -116,7 +117,7 @@ function EnhancedTableToolbar({ numSelected }) {
             </Typography>
         ) : (
             <Typography sx={{ flex: '1 1 100%' }} variant="h6" id="tableTitle" component="div">
-            Portfolio
+            Reviews
             </Typography>
         )}
         {numSelected > 0 ? (
@@ -136,7 +137,7 @@ function EnhancedTableToolbar({ numSelected }) {
     );
 }
 
-const Portfolio = () => {
+const Reviews = () => {
     const [searchQuery, setSearchQuery] = React.useState('');
     const [rows, setRows] = React.useState([]);   // holds data from API
     const [order, setOrder] = React.useState('asc');
@@ -147,7 +148,7 @@ const Portfolio = () => {
     const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
     React.useEffect(() => {
-        fetch('http://localhost:3000/portfolio_images/')
+        fetch('http://localhost:3000/reviews/')
         .then((res) => res.json())
         .then((data) => {
           // data expected to be array of categories
@@ -217,7 +218,7 @@ const Portfolio = () => {
 
   return (
     <div>
-        <h2>Portfolio</h2>
+        <h2>All Reviews</h2>
         <div className="catergories_main">
             <div>
                 <TextField
@@ -229,7 +230,7 @@ const Portfolio = () => {
                 autoComplete="off"
                 />
             </div>
-            <Button variant="contained">Add Category</Button>
+            <Button variant="contained">Add Review</Button>
         </div>
         <Box sx={{ width: '100%' }}>
             <Paper sx={{ width: '100%', mb: 2 }}>
@@ -272,6 +273,7 @@ const Portfolio = () => {
                                     {/* Cells in the exact order of your headers */}
                                     <TableCell>{row.id}</TableCell>
                                     <TableCell>{row.name}</TableCell>
+                                    <TableCell>{row.rating}</TableCell>
                                     <TableCell>
                                         {row.image ? (
                                         <img
@@ -284,7 +286,7 @@ const Portfolio = () => {
                                         'N/A'
                                         )}
                                     </TableCell>
-                                    <TableCell>{row.product_id}</TableCell>
+                                    <TableCell>{row.status==1 ? "active" : "inactive"}</TableCell>
                                     <TableCell>
                                         {/* Placeholder actions (keep functionality later) */}
                                         <Button size="small">Edit</Button>
@@ -320,4 +322,4 @@ const Portfolio = () => {
   )
 }
 
-export default Portfolio
+export default Reviews

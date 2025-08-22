@@ -144,14 +144,14 @@ const navigate = useNavigate();
           </ListItemButton>
           </ListItem>
           <ListItem disablePadding>
-            <ListItemButton>
+            <ListItemButton onClick={() => navigate('/faqs')}>
               <ListItemIcon>
               </ListItemIcon>
               <ListItemText primary="FAQ's" />
             </ListItemButton>
           </ListItem>
           <ListItem disablePadding>
-            <ListItemButton>
+            <ListItemButton onClick={() => navigate('/reviews')}>
               <ListItemIcon>
               </ListItemIcon>
               <ListItemText primary="Reviews" />

@@ -50,6 +50,7 @@ app.use('/users', usersRoutes);
 app.use('/stats', require('./routes/stats'));
 app.use('/newsletter', newsLetterRoutes);
 
+
 app.listen(PORT, () => {
   console.log(`Server running at http://localhost:${PORT}`);
 });
