@@ -36,6 +36,7 @@ const headCells = [
 function getSortValue(row, key) {
     switch (key) {
         case 'updated': return row.updated_at || '';
+        case 'status': return Number(row.status) ?? 0;   // ensure numeric sorting
         default: return row[key] ?? '';
     }
 }
@@ -169,7 +170,8 @@ const FAQS = () => {
         const lowerQuery = searchQuery.toLowerCase();
         return rows.filter(
         (row) =>
-        (row.question && row.question.toLowerCase().includes(lowerQuery))
+        (row.question && row.question.toLowerCase().includes(lowerQuery)) ||
+        (row.answer && row.answer.toLowerCase().includes(lowerQuery))
         );
     }, [rows, searchQuery]);
     const handleRequestSort = (event, property) => {
@@ -225,7 +227,7 @@ const FAQS = () => {
 
   return (
     <div>
-        <h2>ALL CATEGORIES</h2>
+        <h2>ALL FAQS</h2>
         <div className="catergories_main">
             <div>
                 <TextField
