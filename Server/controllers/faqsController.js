@@ -1,11 +1,25 @@
 const db = require('../db');
+const Faq = require("../model/FaqModel");
+const User = require("../model/usersModel");
 
 // GET all FAQs
-exports.getAllFaqs = (req, res) => {
-  db.query('SELECT * FROM faqs', (err, results) => {
-    if (err) return res.status(500).json({ error: err.message });
-    res.json(results);
-  });
+exports.getAllFaqs = async (req, res) => {
+  // db.query('SELECT * FROM faqs', (err, results) => {
+  //   if (err) return res.status(500).json({ error: err.message });
+  //   res.json(results);
+  // });
+  try {
+      const faqs = await Faq.findAll({
+        include: [
+          { model: User, as: 'createdUser', attributes: ['id', 'full_name', 'email'] },
+          { model: User, as: 'updatedUser', attributes: ['id', 'full_name', 'email'] }
+        ]
+      });
+      res.json(faqs);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Error fetching faqs' });
+  }
 };
 
 // GET FAQ by ID
