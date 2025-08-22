@@ -1,11 +1,25 @@
 const db = require('../db');
+const Pages = require("../model/PagesModel");
+const User = require("../model/usersModel");
 
 // GET all pages
-exports.getAllPages = (req, res) => {
-  db.query('SELECT * FROM pages', (err, results) => {
-    if (err) return res.status(500).json({ error: err.message });
-    res.json(results);
-  });
+exports.getAllPages = async (req, res) => {
+  // db.query('SELECT * FROM pages', (err, results) => {
+  //   if (err) return res.status(500).json({ error: err.message });
+  //   res.json(results);
+  // });
+  try {
+    const pages = await Pages.findAll({
+      include: [
+        { model: User, as: 'createdUser', attributes: ['id', 'full_name', 'email'] },
+        { model: User, as: 'updatedUser', attributes: ['id', 'full_name', 'email'] }
+      ]
+    });
+    res.json(pages);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Error fetching categories' });
+  }
 };
 
 // GET page by ID

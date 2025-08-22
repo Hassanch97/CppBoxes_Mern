@@ -2,8 +2,7 @@ const { Sequelize , DataTypes } = require('sequelize');
 const {sequelize} = require('../config');
 const User = require('./usersModel');
 
-// ✅ Category model (with relations)
-const Category = sequelize.define('Category', {
+const BlogCategory = sequelize.define('BlogCategory', {
   id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
   name: { type: DataTypes.STRING, allowNull: false },
   slug: { type: DataTypes.STRING, allowNull: false },
@@ -13,20 +12,9 @@ const Category = sequelize.define('Category', {
   heading: { type: DataTypes.TEXT },
   long_description: { type: DataTypes.TEXT('long') },
   feature_image: { type: DataTypes.STRING },
-  more_information: { type: DataTypes.TEXT },
-  paper_stock: { type: DataTypes.TEXT },
-  printing_methods: { type: DataTypes.TEXT },
-  inks_variations: { type: DataTypes.TEXT },
-  add_ons: { type: DataTypes.TEXT },
-  coatings: { type: DataTypes.TEXT },
-  stock_gallery: { type: DataTypes.STRING },
-  printing_gallery: { type: DataTypes.STRING },
-  inks_gallery: { type: DataTypes.STRING },
-  add_ons_gallery: { type: DataTypes.STRING },
-  coatings_gallery: { type: DataTypes.STRING },
   alt: { type: DataTypes.STRING },
-  status: { type: DataTypes.TINYINT, defaultValue: 1 },
-  customizaton_title: { type: DataTypes.STRING, defaultValue: 'Boxes Limitless Customizations' },
+  status: { type: DataTypes.TINYINT, allowNull: false, defaultValue: 1 },
+  customizaton_title: { type: DataTypes.STRING, allowNull: false, defaultValue: 'Boxes Limitless Customizations' },
   customizaton_short_des: { type: DataTypes.TEXT },
   customizaton_long_desc: { type: DataTypes.TEXT('long') },
   faqs: { type: DataTypes.STRING },
@@ -38,15 +26,12 @@ const Category = sequelize.define('Category', {
   updated_by: { type: DataTypes.INTEGER, allowNull: false },
   updated_at: { type: DataTypes.DATE, defaultValue: Sequelize.NOW },
 }, {
-  tableName: 'categories',
+  tableName: 'blog_categories',
   timestamps: false,
 });
 
 // ✅ Relations
-Category.belongsTo(User, { foreignKey: 'created_by', as: 'createdUser' });
-Category.belongsTo(User, { foreignKey: 'updated_by', as: 'updatedUser' });
+BlogCategory.belongsTo(User, { foreignKey: 'created_by', as: 'createdUser' });
+BlogCategory.belongsTo(User, { foreignKey: 'updated_by', as: 'updatedUser' });
 
-// User.hasMany(Category, { foreignKey: 'created_by', as: 'createdCategories' });
-// User.hasMany(Category, { foreignKey: 'updated_by', as: 'updatedCategories' });
-
-module.exports = Category;
+module.exports = BlogCategory;

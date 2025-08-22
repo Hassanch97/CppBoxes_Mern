@@ -5,6 +5,10 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Home from './Components/Home';
 import Products from './Pages/Products';
 import Category from './Pages/Category';
+import BlogCategory from './Pages/BlogCategory';
+import NewsLetter from './Pages/NewsLetter';
+import Pages from './Pages/Pages';
+import Portfolio from './Pages/Portfolio';
 
 function App() {
   return (
@@ -18,6 +22,12 @@ function App() {
           {/* <Route path="*" element={<NotFound />} /> */}
            <Route path="products" element={<Products />} />
            <Route path="category" element={<Category />} />
+           <Route path="blogcategory" element={<BlogCategory />} />
+           <Route path="newsletter" element={<NewsLetter />} />
+           <Route path="pages" element={<Pages />} />
+           <Route path="portfolio" element={<Portfolio />} />
+
+
         </Route>
       </Routes>
     </Router>

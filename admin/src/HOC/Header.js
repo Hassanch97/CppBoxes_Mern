@@ -112,7 +112,7 @@ const navigate = useNavigate();
         <label>ATTRIBUTES</label>
         <List>
           <ListItem disablePadding>
-            <ListItemButton>
+            <ListItemButton onClick={() => navigate('/blogcategory')}>
               <ListItemIcon>
                 <EditNoteIcon />
               </ListItemIcon>
@@ -158,7 +158,7 @@ const navigate = useNavigate();
             </ListItemButton>
           </ListItem>
           <ListItem disablePadding>
-            <ListItemButton>
+            <ListItemButton onClick={() => navigate('/portfolio')}>
               <ListItemIcon>
               </ListItemIcon>
               <ListItemText primary="Portfolio" />
@@ -172,14 +172,14 @@ const navigate = useNavigate();
             </ListItemButton>
           </ListItem>
           <ListItem disablePadding>
-            <ListItemButton>
+            <ListItemButton onClick={() => navigate('/pages')}>
               <ListItemIcon>
               </ListItemIcon>
               <ListItemText primary="Pages" />
             </ListItemButton>
           </ListItem>
           <ListItem disablePadding>
-            <ListItemButton>
+            <ListItemButton onClick={() => navigate('/newsletter')}>
               <ListItemIcon>
               </ListItemIcon>
               <ListItemText primary="Newsletter" />

@@ -27,6 +27,7 @@ const redirectionRoutes = require('./routes/redirectionsRoutes');
 const servicesRoutes = require('./routes/servicesRoutes');
 const sliderRoutes = require('./routes/sliderRoutes');
 const usersRoutes = require('./routes/usersRoutes');
+const newsLetterRoutes = require('./routes/newsletterRoutes');
 
 // Use routes
 app.use('/categories', categoriesRoutes);
@@ -47,6 +48,7 @@ app.use('/services', servicesRoutes);
 app.use('/slider', sliderRoutes);
 app.use('/users', usersRoutes);
 app.use('/stats', require('./routes/stats'));
+app.use('/newsletter', newsLetterRoutes);
 
 app.listen(PORT, () => {
   console.log(`Server running at http://localhost:${PORT}`);
