@@ -186,7 +186,7 @@ const navigate = useNavigate();
             </ListItemButton>
           </ListItem>
           <ListItem disablePadding>
-            <ListItemButton>
+            <ListItemButton onClick={() => navigate('/redirections')}>
               <ListItemIcon>
               </ListItemIcon>
               <ListItemText primary="Redirections" />

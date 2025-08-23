@@ -28,14 +28,13 @@ const headCells = [
   { id: 'id', label: 'ID' },
   { id: 'email', label: 'Email' },
   { id: 'title', label: 'Blog Title' },
-  { id: 'link', label: 'Blog Link' },
-  { id: 'date', label: 'Date' },
+  { id: 'url', label: 'Blog Link' },
+  { id: 'date_time', label: 'Date' },
   { id: 'action', label: 'Action' },
 ];
 function getSortValue(row, key) {
   switch (key) {
-    case 'banner': return row.feature_image || '';
-    case 'updated': return row.updated_at || '';
+    case 'date_time': return row.date_time || '';
     default: return row[key] ?? '';
   }
 }
