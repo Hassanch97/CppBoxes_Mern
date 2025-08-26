@@ -28,7 +28,7 @@ const headCells = [
     { id: 'id', label: 'ID' },
     { id: 'name', label: 'Name' },
     { id: 'image', label: 'Image' },
-    { id: 'productId', label: 'Product ID' },
+    { id: 'product_id', label: 'Product ID' },
     { id: 'action', label: 'Action' },
 ];
 function getSortValue(row, key) {

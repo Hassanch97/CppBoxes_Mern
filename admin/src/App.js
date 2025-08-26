@@ -12,6 +12,8 @@ import Portfolio from './Pages/Portfolio';
 import Reviews from './Pages/Reviews';
 import FAQS from './Pages/FAQS';
 import Redirections from './Pages/Redirections';
+import Blogs from './Pages/Blogs';
+import Gallery from './Pages/Gallery';
 
 function App() {
   return (
@@ -32,6 +34,8 @@ function App() {
           <Route path="reviews" element={<Reviews />} />
           <Route path="faqs" element={<FAQS />} />
           <Route path="redirections" element={<Redirections />} />
+          <Route path="blogs" element={<Blogs />} />
+          <Route path="gallery" element={<Gallery />} />
           
 
         </Route>

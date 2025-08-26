@@ -26,7 +26,7 @@ import TextField from '@mui/material/TextField';
 
 const headCells = [
     { id: 'id', label: 'ID' },
-    { id: 'title', label: 'Title' },
+    { id: 'name', label: 'Title' },
     { id: 'rating', label: 'Rating' },
     { id: 'image', label: 'Image' },
     { id: 'status', label: 'Status' },

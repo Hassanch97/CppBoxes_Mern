@@ -120,7 +120,7 @@ const navigate = useNavigate();
             </ListItemButton>
           </ListItem>
           <ListItem disablePadding>
-            <ListItemButton>
+            <ListItemButton onClick={() => navigate('/blogs')}>
               <ListItemIcon>
                 <EditNoteIcon />
               </ListItemIcon>
@@ -165,7 +165,7 @@ const navigate = useNavigate();
             </ListItemButton>
           </ListItem>
           <ListItem disablePadding>
-            <ListItemButton>
+            <ListItemButton onClick={() => navigate('/gallery')}>
               <ListItemIcon>
               </ListItemIcon>
               <ListItemText primary="Gallery" />

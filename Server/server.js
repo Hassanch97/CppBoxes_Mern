@@ -1,4 +1,5 @@
 const express = require('express');
+const path = require('path');
 const app = express();
 
 // Import security middleware
@@ -8,6 +9,9 @@ const PORT = 3000;
 
 // Middleware
 app.use(express.json());
+
+// Serve uploads folder
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // Import routes
 const productsRoutes = require('./routes/productsRoutes');
@@ -37,7 +41,7 @@ app.use('/blogs', blogsRoutes);
 app.use('/blog_comments', blogCommentsRoutes);
 app.use('/authors', authorsRoutes);
 app.use('/faqs', faqsRoutes);
-app.use('/galleries', galleriesRoutes);
+app.use('/galleries', galleriesRoutes); // <-- updated galleries route
 app.use('/product_images', productImagesRoutes);
 app.use('/reviews', reviewsRoutes);
 app.use('/metas', metasRoutes);
@@ -49,7 +53,6 @@ app.use('/slider', sliderRoutes);
 app.use('/users', usersRoutes);
 app.use('/stats', require('./routes/stats'));
 app.use('/newsletter', newsLetterRoutes);
-
 
 app.listen(PORT, () => {
   console.log(`Server running at http://localhost:${PORT}`);
