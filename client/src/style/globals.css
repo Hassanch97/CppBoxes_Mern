@@ -1,0 +1,63 @@
+@import "tailwindcss";
+
+
+@theme inline {
+  --font-* : initial;
+  --font-primary : var(--font-inter);
+}
+
+/* DISABLE THE FORCED COLOR BY BROWSER */
+:root {forced-color-adjust: none;}
+
+@theme {
+  /* CONTAINER */
+  --container-* : initial;
+  --container-lg : 81.25rem;                  /* 1300px */ 
+  /* BREAK POINT */
+  --breakpoint-* : initial;
+  --breakpoint-xs : 30rem;                    /* 480px */
+  --breakpoint-sm : 36rem;                    /* 576px */
+  --breakpoint-md : 48rem;                    /* 768px */  
+  --breakpoint-lg : 62rem;                    /* 992px */
+  --breakpoint-xl : 75rem;                    /* 1200px */
+  --breakpoint-2xl : 87.5rem;                 /* 1400px */
+  /* COLOR */
+  --color-* : initial;
+  --color-primary : #ec7200;                  
+  --color-light: #fff;                        /* IF NEEDED THEN ADD THE SECONDARY COLOR */
+  --color-dark : #000;
+  --color-phara : #3d5154;
+  --color-heading : #212529;
+  /* PRIVATE VARIABLE */
+  --color--header-bg : #f2f2f2;
+  --color--header-br : #999;
+  --color--small : #737373;
+  --color--header-form-br : #ccc;
+  /* as, we can also define the shadow, filter and transition that we will see later */
+  /* FILTER */
+  --filter-primary : brightness(0) saturate(100%) invert(93%) sepia(2%) saturate(198%) hue-rotate(314deg) brightness(80%) contrast(83%);
+  --my-gradient : 180deg,#e89a50 0,#ec7300 100%;
+  --request-gradient : 0deg,#ccc 0,#fafafa 70%;
+}
+
+@layer utilities {
+  .container {
+    max-width: var(--container-lg);
+    margin-inline: auto;
+    padding-inline: 0.75rem;
+  }
+}
+
+@layer base {
+  body {
+    @apply text-base font-primary leading-normal font-normal;
+  }
+}
+
+/* HERE'S I WILL CREATED MORE CLASSES LIKE .BTN WITH THE HELP OF @layer components {} and in @layer utilities we can't use @apply and utilities used only for the single purposes like container width scrollbar and text shadow etc.*/
+
+
+/* FOR CONSISTENCY I WILL USE */
+/* PascalCase for components */
+/* kebab case for page files */
+/* Data, Constants and Utilities camelCase or snake_case  */
