@@ -1,16 +1,21 @@
 const db = require('../db');
+const Blogs = require("../model/BlogsModel");
+const User = require("../model/usersModel");
 
 // GET all blogs with category name
-exports.getAllBlogs = (req, res) => {
-  const sql = `
-    SELECT blogs.*, blog_categories.name AS category_name
-    FROM blogs
-    LEFT JOIN blog_categories ON blogs.category = blog_categories.id
-  `;
-  db.query(sql, (err, results) => {
-    if (err) return res.status(500).json({ error: err.message });
-    res.json(results);
-  });
+exports.getAllBlogs = async (req, res) => {
+  try {
+    const blogs = await Blogs.findAll({
+      include: [
+        { model: User, as: 'createdUser', attributes: ['id', 'full_name', 'email'] },
+        { model: User, as: 'updatedUser', attributes: ['id', 'full_name', 'email'] }
+      ]
+    });
+    res.json(blogs);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Error fetching Blogs' });
+  }
 };
 
 // GET blog by ID

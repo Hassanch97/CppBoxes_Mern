@@ -1,14 +1,28 @@
 const db = require('../db');
+const Category = require("../model/CategoriesModel");
+const User = require("../model/usersModel");
 
-// GET all categories
-exports.getAllCategories = (req, res) => {
-  db.query('SELECT * FROM categories', (err, results) => {
-    if (err) return res.status(500).json({ error: err.message });
-    res.json(results);
-  });
+// ✅ GET all categories
+exports.getAllCategories = async (req, res) => {
+  // db.query('SELECT * FROM categories', (err, results) => {
+  //   if (err) return res.status(500).json({ error: err.message });
+  //   res.json(results);
+  // });
+  try {
+    const categories = await Category.findAll({
+      include: [
+        { model: User, as: 'createdUser', attributes: ['id', 'full_name', 'email'] },
+        { model: User, as: 'updatedUser', attributes: ['id', 'full_name', 'email'] }
+      ]
+    });
+    res.json(categories);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Error fetching categories' });
+  }
 };
 
-// GET category by ID
+// ✅ GET category by ID
 exports.getCategoryById = (req, res) => {
   db.query('SELECT * FROM categories WHERE id = ?', [req.params.id], (err, results) => {
     if (err) return res.status(500).json({ error: err.message });
@@ -17,7 +31,7 @@ exports.getCategoryById = (req, res) => {
   });
 };
 
-// CREATE category
+// ✅ CREATE category
 exports.createCategory = (req, res) => {
   const {
     name, slug, icon, title, short_description, heading, long_description,
@@ -56,7 +70,7 @@ exports.createCategory = (req, res) => {
   });
 };
 
-// UPDATE category
+// ✅ UPDATE category
 exports.updateCategory = (req, res) => {
   const {
     name, slug, icon, title, short_description, heading, long_description,
@@ -94,7 +108,7 @@ exports.updateCategory = (req, res) => {
   });
 };
 
-// DELETE category
+// ✅ DELETE category
 exports.deleteCategory = (req, res) => {
   db.query('DELETE FROM categories WHERE id = ?', [req.params.id], (err, result) => {
     if (err) return res.status(500).json({ error: err.message });

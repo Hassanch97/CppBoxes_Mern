@@ -1,0 +1,3 @@
+.blogcatergories_main {display: flex;align-items: center;justify-content: space-between;}
+.blogcatergories_main {margin-bottom: 20px;}
+.blogcatergories_main > button {background-color: #ea6815;text-transform: capitalize;color: #fff;padding-inline: 15px;}

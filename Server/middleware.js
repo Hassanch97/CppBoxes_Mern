@@ -4,6 +4,7 @@ const cors = require('cors');
 const xssClean = require('xss-clean');
 const hpp = require('hpp');
 const express = require('express');
+const config = require('./config');
 
 // Security Middlewares
 module.exports = (app) => {
@@ -17,11 +18,11 @@ module.exports = (app) => {
   app.use(hpp());
 
   // 4. Enable CORS (change origin for production)
-  app.use(cors({
-    origin: ['http://localhost'], // update for your frontend
-    methods: ['GET', 'POST', 'PUT', 'DELETE'],
-    credentials: false
-  }));
+app.use(cors({
+  origin: 'http://localhost:3001',
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  credentials: true,
+}));
 
   // 5. Rate Limiting (avoid brute force / DoS)
   const limiter = rateLimit({

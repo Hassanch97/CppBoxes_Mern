@@ -1,5 +1,5 @@
 require('dotenv').config();
-
+const { Sequelize } = require('sequelize');
 const config = {
   app: {
     port: process.env.PORT || 5000,
@@ -20,4 +20,8 @@ const config = {
   },
 };
 
-module.exports = config;
+const sequelize = new Sequelize(config.db.name, config.db.user, config.db.password, {
+  host: config?.db?.host,
+  dialect: 'mysql',
+});
+module.exports = {config,sequelize};
