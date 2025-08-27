@@ -89,3 +89,4 @@ exports.uploadImage = (req, res) => {
     });
   });
 };
+  
